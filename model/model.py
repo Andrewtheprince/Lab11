@@ -14,6 +14,7 @@ class Model:
         return DAO.getColori()
 
     def buildGraph(self, anno, colore):
+        self._graph.clear()
         nodi = DAO.getProdotti(colore)
         self._graph.add_nodes_from(nodi)
         for nodo in nodi:
@@ -42,3 +43,6 @@ class Model:
         conteggi = Counter(nodi)
         duplicati = [elem for elem, count in conteggi.items() if count >1]
         return top3, duplicati
+
+    def getNodi(self):
+        return self._graph.nodes

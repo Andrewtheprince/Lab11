@@ -32,15 +32,20 @@ class Controller:
         self._view.txtOut.controls.append(ft.Text(f"Numero di vertici: {self._model.getNumNodi()} Numero di archi: {self._model.getNumArchi()}"))
         archi, duplicati = self._model.getArchiPesoMaggiore()
         for u, v, weight in archi:
-            self._view.txtOut.controls.append(ft.Text(f"Arco da {u} a {v}, peso={weight}"))
+            self._view.txtOut.controls.append(ft.Text(f"Arco da {u.Product_number} a {v.Product_number}, peso={weight}"))
         nodi = []
         for duplicato in duplicati:
-            nodi.append(str(duplicato))
+            nodi.append(duplicato.Product_number)
         self._view.txtOut.controls.append(ft.Text(f"I nodi ripetuti sono: {nodi}"))
+        self._view._ddnode.disabled = False
+        self._view.btn_search.disabled = False
+        self.fillDDProduct()
         self._view.update_page()
 
     def fillDDProduct(self):
-        pass
+        prodotti = self._model.getNodi()
+        for prodotto in prodotti:
+            self._view._ddnode.options.append(ft.dropdown.Option(prodotto))
 
     def handle_search(self, e):
         pass
