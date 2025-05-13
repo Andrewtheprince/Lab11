@@ -43,7 +43,7 @@ class DAO:
         query = """ select gds.Product_number as p1, gds2.Product_number as p2
                     from go_daily_sales gds, go_daily_sales gds2
                     where gds.Retailer_code = gds2.Retailer_code and gds.Date = gds2.Date and YEAR(gds.Date) = %s and gds.Product_number != gds2.Product_number
-                    LIMIT 2000"""
+                    group by gds.Product_number, gds2.Product_number, gds.Date"""
         cursor.execute(query, (anno,))
         for row in cursor:
             if row["p1"] in idMap and row["p2"] in idMap:
