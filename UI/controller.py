@@ -28,8 +28,15 @@ class Controller:
         if colore is None or colore == "":
             self._view.create_alert(f"Devi inserire un colore!")
             return
-        self._model.buildGraph()
-        self._view.txtOut.controls.append(ft.Text(f"Grafo creato correttamente!", color="green"))
+        self._model.buildGraph(anno, colore)
+        self._view.txtOut.controls.append(ft.Text(f"Numero di vertici: {self._model.getNumNodi()} Numero di archi: {self._model.getNumArchi()}"))
+        archi, duplicati = self._model.getArchiPesoMaggiore()
+        for u, v, weight in archi:
+            self._view.txtOut.controls.append(ft.Text(f"Arco da {u} a {v}, peso={weight}"))
+        nodi = []
+        for duplicato in duplicati:
+            nodi.append(str(duplicato))
+        self._view.txtOut.controls.append(ft.Text(f"I nodi ripetuti sono: {nodi}"))
         self._view.update_page()
 
     def fillDDProduct(self):
