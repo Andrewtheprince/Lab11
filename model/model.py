@@ -46,3 +46,22 @@ class Model:
 
     def getNodi(self):
         return self._graph.nodes
+
+    def percorso_piu_lungo_crescente_undirected(self, sorgente) -> list:
+        max_path = []
+        def dfs(nodo, path, peso_prec, visitati):
+            nonlocal max_path
+            if len(path) > len(max_path):
+                max_path = path[:]
+
+            for vicino in self._graph.neighbors(nodo):
+                if vicino not in visitati:
+                    peso = self._graph[nodo][vicino].get("weight", 0)
+                    if peso > peso_prec:
+                        visitati.add(vicino)
+                        dfs(vicino, path + [vicino], peso, visitati)
+                        visitati.remove(vicino)
+
+        dfs(sorgente, [sorgente], -float("inf"), {sorgente})
+
+        return max_path

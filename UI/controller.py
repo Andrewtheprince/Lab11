@@ -48,4 +48,11 @@ class Controller:
             self._view._ddnode.options.append(ft.dropdown.Option(prodotto))
 
     def handle_search(self, e):
-        pass
+        sorgente = self._view._ddnode.value
+        if sorgente is None or sorgente == "":
+            self._view.create_alert(f"Devi inserire un prodotto di partenza!")
+            return
+        percorso = self._model.percorso_piu_lungo_crescente_undirected(sorgente)
+        self._view.txtOut2.controls.clear()
+        self._view.txtOut2.controls.append(ft.Text(f"Numero archi percorso più lungo: {len(percorso)}"))
+        self._view.update_page()
